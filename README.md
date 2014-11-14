@@ -5,4 +5,4 @@ Code for competition
 
 In progress
 
-Hope it will be completed.
+COMMIT!
