@@ -1,15 +1,3 @@
-/* DPM lab 3
- * 
- * group: 47
- * 
- * 
- * name:Philippe Douyon
- * student id: 260581387
- * 
- * name:David Liu
- * student id:260493132
- */
-
 
 
 import lejos.nxt.Motor;
