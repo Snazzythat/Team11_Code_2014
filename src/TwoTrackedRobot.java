@@ -14,7 +14,7 @@ public class TwoTrackedRobot extends Thread  {
 	private final int Maximum_SPEED = 400;
 	private final int Scaling_SPEED = 10; //factor by which the error is multiplied to get the speed
 	private static final int LOCALIZATION_SPEED = 80;
-    private static final int FORWARD_SPEED = 300;
+    private static final int FORWARD_SPEED = 250;
 	private final int ROTATE_SPEED = 120;
 	
 	private static int spd;
@@ -24,8 +24,8 @@ public class TwoTrackedRobot extends Thread  {
 	NXTRegulatedMotor rightMotor = Motor.C;
 	NXTRegulatedMotor clawMotor = Motor.B;
 	
-	private static double WHEEL_BASE = 17;          //subject to change
-	private static double WHEEL_RADIUS = 1.79;      //subject to change
+	private static double WHEEL_BASE;          //subject to change
+	private static double WHEEL_RADIUS;      //subject to change
 	private boolean isNavigating;
 	public double thetar, xr, yr;
 	public static double destinationX, destinationY;
@@ -40,6 +40,9 @@ public class TwoTrackedRobot extends Thread  {
 		this.odo =  odometer;
 		//clawMotor.lock(100);                     //power lock for arm motor: to be considered
 		isNavigating = false;
+		WHEEL_RADIUS=Main.WHEEL_RADIUS;
+		WHEEL_BASE=Main.WHEEL_BASE;
+		
 	}
 	
 /**
@@ -125,8 +128,8 @@ public class TwoTrackedRobot extends Thread  {
 			leftMotor.setSpeed(LOCALIZATION_SPEED);
 			rightMotor.setSpeed(LOCALIZATION_SPEED);
 			isNavigating = true;
-			leftMotor.rotate(convertAngle(WHEEL_RADIUS, WHEEL_BASE, theta+45), true);
-			rightMotor.rotate(-convertAngle(WHEEL_RADIUS, WHEEL_BASE, theta+45), false);
+			leftMotor.rotate(convertAngle(WHEEL_RADIUS, WHEEL_BASE, theta), true);
+			rightMotor.rotate(-convertAngle(WHEEL_RADIUS, WHEEL_BASE, theta), false);
 			isNavigating = false;
 		}
 		

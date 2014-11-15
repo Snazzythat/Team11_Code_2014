@@ -1,14 +1,3 @@
-/* DPM lab 3
- * 
- * group: 47
- * 
- * 
- * name:Philippe Douyon
- * student id: 260581387
- * 
- * name:David Liu
- * student id:260493132
- */
 
 
 
@@ -20,7 +9,7 @@ import lejos.nxt.NXTRegulatedMotor;
 
 public class Navigation extends Thread {
 	//wheel radius
-	double radius = Main.WHEEL_RADIUS;
+	double radius;;
 	//robot width
 	double width;
 	//set speeds
@@ -43,23 +32,23 @@ public class Navigation extends Thread {
 	// is navigation boolean
 	@SuppressWarnings("unused")
 	private Object lock;
-
+    TwoTrackedRobot robot;
 	
 	
 	
 	
 
-	public Navigation(Odometer odometer) {
+	public Navigation(Odometer odometer, TwoTrackedRobot robot) {
 		// initialise the start position
 		
 		this.odometer= odometer;
 		width=Main.WHEEL_BASE;
 		lock = new Object();
-		
+		this.robot=robot;
 		fakeX=0;
 		fakeY=0;
 		fakeTheta=0;
-		
+		radius=Main.WHEEL_RADIUS;
 	}
 	
 
@@ -75,12 +64,13 @@ public void turnN()
 		
 		fakeX+=15*Math.cos(fakeTheta*Math.PI/180);
 		fakeY+=15*Math.sin(fakeTheta*Math.PI/180);
-		// make the robot go forward
+		
 		leftMotor.setSpeed(FORWARD_SPEED);
 		rightMotor.setSpeed(FORWARD_SPEED);
 		// make the robot go the distance
 		leftMotor.setAcceleration(500);
 		rightMotor.setAcceleration(500);
+		
 		leftMotor.rotate(convertDistance(radius, d), true);
 		rightMotor.rotate(convertDistance(radius, d), false);
     }
@@ -129,6 +119,7 @@ public void turnN()
 		// make the robot go the distance
 		leftMotor.rotate(convertDistance(radius, distance), true);
 		rightMotor.rotate(convertDistance(radius, distance), false);
+		
 	}
 
 	public void turnTo(double theta) {
@@ -147,10 +138,13 @@ public void turnN()
 		rightMotor.setSpeed(ROTATE_SPEED);
 		// rotate the robot
 		leftMotor.rotate(convertAngle(radius, width, deltaT), true);
-		rightMotor.rotate(-convertAngle(radius, width, deltaT), false);
-		leftMotor.stop();
-		rightMotor.stop();
+	    rightMotor.rotate(-convertAngle(radius, width, deltaT), false);
+		
+		//leftMotor.stop();
+		//rightMotor.stop();
+		robot.stop();
 	}
+	
 	public void moveToDestination()
 	{
 		if (odometer.getY()<0)
@@ -158,8 +152,11 @@ public void turnN()
 			travelTo(odometer.getX(),15);
 		}
 			travelTo(15,odometer.getY());
-			travelTo(15,75);
+		    
+		   	
+			travelTo(15,75);                   //Actual destination of the pick up zone    
 			travelTo(75,75);
+		    
 	}
 
 	

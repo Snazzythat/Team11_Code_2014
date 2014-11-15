@@ -3,11 +3,16 @@ import lejos.util.*;
 
 /**
  * 
+ * Main class for Robot
+ * All classes initialized here
+ * Constants must be changed here and only here (Radius, etc)
+ * @author Team 11 
  *
  */
+
 public class Main {
 	
-	public static final double WHEEL_BASE = 17;
+	public static final double WHEEL_BASE = 17;         //Calibrate Actual numbers for orienteering
 	public static final double WHEEL_RADIUS = 1.79;     //1.79
     public static TwoTrackedRobot TTR;
 	//public static Calibration calib;
@@ -18,14 +23,16 @@ public class Main {
 	public final static int DIMENTION=4;
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 	
 		int buttonChoice;
-		do {
+		do 
+		{
 			// clear the display
 			LCD.clear();
             // ask the user whether the motors should drive in a square or float
-			LCD.drawString("< Go pick up   >", 0, 0);
+			LCD.drawString("   Go pick up   ", 0, 0);
 			LCD.drawString("      THE       ", 0, 1);
 			LCD.drawString("      DOOMED    ", 0, 2);
 			LCD.drawString("      BLOCK     ", 0, 3);
@@ -33,20 +40,22 @@ public class Main {
 
 			buttonChoice = Button.waitForAnyPress();
 		}
-		while (buttonChoice != Button.ID_LEFT
-				&& buttonChoice != Button.ID_RIGHT);
 		
-		if (buttonChoice == Button.ID_LEFT){
+		while (buttonChoice != Button.ID_LEFT && buttonChoice != Button.ID_RIGHT);
 		
-		//getBluetooth();
-		//after Bluetooth input received:
+		if (buttonChoice == Button.ID_LEFT)
+		{
+		
+		//getBluetooth();                                    //GENERATE BLUETOOTH RECEPTION 
+			
+		//Class, sensor initialization
 		ColorSensor cs = new ColorSensor(SensorPort.S2);
 		UltrasonicSensor us = new UltrasonicSensor(SensorPort.S1);
 		UltrasonicPoller usPoller = new UltrasonicPoller(us, 50);
 		
 		odo = new Odometer();
 		TTR = new TwoTrackedRobot(odo);
-		nav=new Navigation (odo);
+		nav=new Navigation (odo, TTR);
 		map=new Map(DIMENTION);               
 		
 		

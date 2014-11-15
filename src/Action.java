@@ -93,9 +93,12 @@ public class Action extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		nav.moveToDestination();
 		nav.turnTo(90);
+		
 		String orientation = null;
+		
 		if (map.originalTheta==0)
 			orientation="north";
 		if (map.originalTheta==1)
@@ -106,8 +109,8 @@ public class Action extends Thread {
 			orientation="west";
 		System.out.println("original position: ");
 		System.out.println((map.originalX*30-15)+" "+((3-map.originalY)*30-15)+" "+orientation);
-		while (Button.waitForAnyPress() != Button.ID_ESCAPE);
-		System.exit(0);
+		
+		
 	}
 }
 
